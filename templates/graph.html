@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<title>First Flask App</title>
+<style>
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+  }
+  th {
+    text-align: left;
+  }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
+  </head>
+ <body>
+ <h1>welcome here</h1>
+ <table style="width:100%">
+  <tr>
+    <th>value</th>
+    <th>incircle_values</th>
+    <th>number_shots</th>
+    <th>Resource_id</th>
+   
+  </tr>
+  {% for item in s %}
+  <tr>
+    <td>{{item.values}}</td>
+    <td>{{item.incircle_values}}</td>
+    <td>{{item.number_shots}}</td>
+    <td>{{item.Resource_id}}</td>
+    
+  </tr>
+  {% endfor %}
+</table>
+
+  <h3 id="acpi">{{actual_pi}}</h3>
+
+ 
+
+
+  <script>
+   
+  </script>
+  <div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+
+
+
+  <script type="text/javascript">
+function absa() {
+  //  var ab = parseInt(text1);
+  //  var acpi = document.getElementById('acpi').innerHTML
+   // var res = acpi.slice(0,4)
+    //console.log(res)
+   var ab = '{{actual_pi}}'
+   var acpi = parseFloat(ab)
+   var res = acpi
+    const labels = [ ];
+    
+      var someJavaScriptVar = JSON.parse('{{ s | tojson | safe}}');
+      //console.log(someJavaScriptVar)
+      let result = someJavaScriptVar.map(a => a.values);
+      var flat_list1 = '{{ flat_list }}'
+      var matchId = '{{matching}}'
+      var matchingId = parseInt(matchId)
+      console.log(matchingId)
+      array = flat_list1.match(/\d+(?:\.\d+)?/g).map(Number)
+      //console.log('fafdfLit',flat_list1)
+      //console.log('res',result)
+      newresult = []
+      m = 5 
+      console.log(newresult)
+      var valuess =[];
+      var Header= ['yearss','Pi', 'accpi'];
+      valuess.push(Header)
+      for(var i=0;i<array.length;i++){
+        var temp=[];
+        let varpi = parseFloat(array[i].toFixed(matchingId))
+        let accpi = res.toFixed(matchingId)
+       /* if(varpi == accpi) {
+         // alert('matched',i)
+          for(j=i;j<array.length;j++){
+            temp.push(i)
+         temp.push(varpi);
+        temp.push(accpi);
+        valuess.push(temp)
+          }
+       return valuess
+        }else */{
+      temp.push(i)
+      temp.push(parseFloat(array[i].toFixed(matchingId)));
+      temp.push(parseFloat(res.toFixed(matchingId)));
+      valuess.push(temp);
+      }  
+    }
+      console.log('valuesss',valuess)
+    return valuess
+    }
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var valuess = absa()
+      var data = google.visualization.arrayToDataTable(valuess);
+
+      var options = {
+        title: 'acctual Pi vs variable Pi balue',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+      chart.draw(data, options);
+    }
+  
+  
+  </script>
+ 
+</body>
+
+</html>
